@@ -65,7 +65,8 @@ COOKIES_ENABLED = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'taobao_spider.pipelines.TaobaoSpiderPipeline': 1,
+    # 'taobao_spider.pipelines.TaobaoSpiderPipeline': 1,
+    'taobao_spider.pipelines.ImagesPipeline': 1,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -134,6 +135,7 @@ DOWNLOADER_MIDDLEWARES = {
     'taobao_spider.MidWare.HeaderMidWare.ProcessHeaderMidware': 543,
 }
 
+IMAGES_STORE = "D:/pic/"
 # MONGO_HOST = "127.0.0.1"  # 主机IP
 # MONGO_PORT = 27017  # 端口号
 # MONGO_DB = "tbdb"  # 库名

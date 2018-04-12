@@ -21,6 +21,14 @@ class TaobaoSpiderItem(scrapy.Item):
     address = scrapy.Field()
     pass
 
+class TaobaoPicItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    id = scrapy.Field()
+    shop = scrapy.Field()
+    pic_urls = scrapy.Field()
+    pass
+
 class TaobaoSpiderLoader(ItemLoader):
     default_item_class = TaobaoSpiderItem
     default_input_processor = MapCompose(lambda s: s.strip())

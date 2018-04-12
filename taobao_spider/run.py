@@ -2,6 +2,6 @@
 # @Time : 2017/1/1 17:51
 # @Author : woodenrobot
 from scrapy import cmdline
-name = 'taobao'
+name = 'taobao_pic'
 cmd = 'scrapy crawl {0}'.format(name)
 cmdline.execute(cmd.split())
