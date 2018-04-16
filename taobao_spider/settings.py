@@ -46,15 +46,16 @@ COOKIES_ENABLED = False
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'taobao_spider.middlewares.TaobaoSpiderSpiderMiddleware': 543,
-#}
+# SPIDER_MIDDLEWARES = {
+#    'taobao_spider.middlewares.JavaScriptMiddleware': 543,
+# }
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'taobao_spider.middlewares.MyCustomDownloaderMiddleware': 543,
-#}
+# DOWNLOADER_MIDDLEWARES = {
+#    'taobao_spider.middlewares.JavaScriptMiddleware': 500,   # 键为中间件类的路径，值为中间件的顺序
+#     'taobao_spider.middlewares.RandomUserAgent': 500
+# }
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
@@ -133,9 +134,11 @@ USER_AGENT_LIST = ['zspider/0.9-dev http://feedback.redkolibri.com/',
 
 DOWNLOADER_MIDDLEWARES = {
     'taobao_spider.MidWare.HeaderMidWare.ProcessHeaderMidware': 543,
+    'taobao_spider.middlewares.JavaScriptMiddleware': 500,  # 键为中间件类的路径，值为中间件的顺序
 }
 
 IMAGES_STORE = "D:/pic/"
+PHANTOMJS_PATH = "D:\\work\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe"
 # MONGO_HOST = "127.0.0.1"  # 主机IP
 # MONGO_PORT = 27017  # 端口号
 # MONGO_DB = "tbdb"  # 库名

@@ -45,33 +45,10 @@ class ImagesPipeline(ImagesPipeline):
                 os.makedirs(store_path)
             # 将文件从默认下路路径移动到指定路径下
             if os.path.exists(store_path + os.path.basename(image_path[i])) == False:
+                # TODO 有时候会报“找不到指定文件”，是因为多个商品都引用了同一张图,导致图片名相同。不影响下载。
                 shutil.move(self.img_store + image_path[i], store_path)
             else:
                 print("[Warn] 重复图片，要提前过滤。URL:" + item['pic_urls'][i])
         pass
 
         return item
-
-
-class TaobaoSpiderPipeline(object):
-    # def __init__(self):
-    # # 链接数据库
-    # self.client = pymongo.MongoClient(host=settings['MONGO_HOST'], port=settings['MONGO_PORT'])
-    # # self.client.admin.authenticate(settings['MINGO_USER'], settings['MONGO_PSW'])     #如果有账户密码
-    # self.db = self.client[settings['MONGO_DB']]  # 获得数据库的句柄
-    # self.coll = self.db[settings['MONGO_COLL']]  # 获得collection的句柄
-
-    def process_item(self, item, spider):
-        try:
-            print('商品ID\t', item['id'])
-            print('商品店铺\t', item['shop'])
-            print('商品图片urls:')
-            for i in range(0, len(item['pic_urls'])):
-                if (item['pic_urls'][i].endwith('.jpg')):
-                    print(item['pic_urls'][i], "\r\n")
-                pass
-            pass
-            print('------------------------------\n')
-            return item
-        except Exception as err:
-            pass
