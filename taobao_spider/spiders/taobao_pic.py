@@ -18,8 +18,8 @@ class TaobaoSpider(Spider):
     def parse(self, response):
         # key = input("请输入你要爬取的关键词\t")
         # pages = input("请输入你要爬取的页数\t")
-        key = "江南布衣"
-        pages = '2'
+        key = "男装"
+        pages = '4'
         self.log.write("当前爬取的关键词：")
         self.log.write(key)
         for i in range(0, int(pages)):
@@ -66,7 +66,9 @@ class TaobaoSpider(Spider):
             item['shop'] = response.meta['this_shop']
             item['pic_urls'] = list(set(pic_urls))  # 去重，因为使用正则会有重复图片
             if len(item['pic_urls']) == 0:
+                # TODO  触发反爬时sleep 5min. Url: https://login.tmall.com/?
                 print("图片获取失败。Url:", response.url)
+                pass
             self.log.write("商品详情：")
             self.log.write(response.url)
             yield item

@@ -4,6 +4,7 @@
 #
 # @author zhangjianfei
 # @date 2017/05/04
+import base64
 import re
 import time
 
@@ -16,13 +17,14 @@ from scrapy.utils.project import get_project_settings
 settings = get_project_settings()
 
 
+# 在scrapy中设置的header同样作用于PhantomJS，这里无需再设置
 class JavaScriptMiddleware(object):
     def process_request(self, request, spider):
         url = request.url
         pat_url = "https://(.*?).com"
         web = re.compile(pat_url).findall(url)
 
-        if  len(web) > 0 and web[0] == 'detail.tmall':     #仅处理tmall详情页商品
+        if len(web) > 0 and web[0] == 'detail.tmall':  # 仅处理tmall详情页商品
             # 开启虚拟浏览器参数
             dcap = dict(DesiredCapabilities.PHANTOMJS)
 
@@ -42,7 +44,7 @@ class JavaScriptMiddleware(object):
             driver.get(request.url)
 
             # simulate user behavior
-            js = 'window.scrollTo(0,3000)'  #模拟移动到网页(0,3000)像素点的位置，如果网页过长，要分多次移动，以免中间部分因为太快没有加载成功。
+            js = 'window.scrollTo(0,3000)'  # 模拟移动到网页(0,3000)像素点的位置，如果网页过长，要分多次移动，以免中间部分因为太快没有加载成功。
             driver.execute_script(js)  # 可执行js，模仿用户操作。此处为将页面拉至1000。
             time.sleep(5)
 
@@ -111,18 +113,24 @@ class JavaScriptMiddleware(object):
         #     body = body + driver.page_source
 
     # 随机使用预定义列表里的 Proxy代理
-    # class ProxyMiddleware(object):
-    #     def process_request(self, request, spider):
-    #         # 随机获取from settings import PROXIES里的代理
-    #         proxy = random.choice(PROXIES)
-    #
-    #         # 如果代理可用，则使用代理
-    #         if proxy['user_pass'] is not None:
-    #             request.meta['proxy'] = "http://%s" % proxy['ip_port']
-    #             # 对代理数据进行base64编码
-    #             encoded_user_pass = base64.encodestring(proxy['user_pass'])
-    #             # 添加到HTTP代理格式里
-    #             request.headers['Proxy-Authorization'] = 'Basic ' + encoded_user_pass
-    #         else:
-    #             print "****代理失效****" + proxy['ip_port']
-    #             request.meta['proxy'] = "http://%s" % proxy['ip_port']
+
+
+class ProxyMiddleware(object):
+    def process_request(self, request, spider):
+        # 随机获取from settings import PROXIES里的代理
+        proxy = random.choice(settings.get('PROXIES'))
+
+        # 如果代理可用，则使用代理
+        if proxy['user_pass'] is not None and proxy['user_pass'] != '':
+            # request.meta['proxy'] = "http://%s" % proxy['ip_port']
+            request.meta['proxy'] = "%s://%s" % (proxy['type'], proxy['ip_port'])
+            # 对代理数据进行base64编码
+            encoded_user_pass = base64.encodestring(proxy['user_pass'])
+            # 添加到HTTP代理格式里
+            request.headers['Proxy-Authorization'] = 'Basic ' + encoded_user_pass
+            pass
+        else:
+            print('****代理生效****', proxy['ip_port'])
+            # request.meta['proxy'] = "http://%s" % proxy['ip_port']
+            # request.meta['proxy'] = "%s://%s" % (proxy['type'], proxy['ip_port'])
+            request.meta['proxy'] = "http://113.12.72.24:3128"
