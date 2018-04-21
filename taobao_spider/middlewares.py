@@ -130,7 +130,9 @@ class ProxyMiddleware(object):
             request.headers['Proxy-Authorization'] = 'Basic ' + encoded_user_pass
             pass
         else:
+            # request.meta['proxy'] = "http://113.12.72.24:3128"
+            # request.meta['proxy'] = "https://114.113.126.87:80"
             print('****代理生效****', proxy['ip_port'])
-            # request.meta['proxy'] = "http://%s" % proxy['ip_port']
+            request.meta['proxy'] = "http://%s" % proxy['ip_port']
             # request.meta['proxy'] = "%s://%s" % (proxy['type'], proxy['ip_port'])
-            request.meta['proxy'] = "http://113.12.72.24:3128"
+

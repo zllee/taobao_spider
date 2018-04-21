@@ -235,26 +235,14 @@ PHANTOMJS_PATH = "D:\\work\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe"
 # ]
 
 PROXIES = [
-    {'ip_port': '119.128.172.105:8118', 'user_pass': ''},
-    {'ip_port': '218.72.109.70:18118', 'user_pass': ''},
-    {'ip_port': '218.72.109.166:18118', 'user_pass': ''},
-    {'ip_port': '183.159.90.136:18118', 'user_pass': ''},
-    {'ip_port': '183.159.92.0:18118', 'user_pass': ''},
-    {'ip_port': '111.155.116.237:8123', 'user_pass': ''},
-    {'ip_port': '49.79.193.138:61234', 'user_pass': ''},
-    {'ip_port': '114.215.83.184:3128', 'user_pass': ''},
     {'ip_port': '122.114.31.177:808', 'user_pass': ''},
-    {'ip_port': '61.135.217.7:80', 'user_pass': ''},
-    {'ip_port': '183.159.93.159:18118', 'user_pass': ''},
-    {'ip_port': '60.177.227.108:18118', 'user_pass': ''},
-    {'ip_port': '123.56.89.238:60443', 'user_pass': ''},
-    {'ip_port': '42.7.26.21:60443', 'user_pass': ''},
-    {'ip_port': '183.159.94.22:18118', 'user_pass': ''},
-    {'ip_port': '183.159.91.212:18118', 'user_pass': ''},
-    {'ip_port': '27.217.155.8:8118', 'user_pass': ''},
-    {'ip_port': '111.192.176.169:8118', 'user_pass': ''},
-    {'ip_port': '183.159.95.16:18118', 'user_pass': ''},
-    {'ip_port': '60.177.228.169:18118', 'user_pass': ''},
+    {'ip_port': '60.173.242.141:808', 'user_pass': ''},
+    {'ip_port': '60.177.227.112:18118', 'user_pass': ''},
+    {'ip_port': '112.115.57.20:3128', 'user_pass': ''},
+    {'ip_port': '119.115.235.131:8118', 'user_pass': ''},
+    {'ip_port': '183.159.91.19:18118', 'user_pass': ''},
+    {'ip_port': '49.79.192.133:61234', 'user_pass': ''},
+    {'ip_port': '1.196.160.211:9999', 'user_pass': ''},
 ]
 
 # MONGO_HOST = "127.0.0.1"  # 主机IP
