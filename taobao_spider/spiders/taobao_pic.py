@@ -22,7 +22,7 @@ class TaobaoSpider(Spider):
         # key = input("请输入你要爬取的关键词\t")
         # pages = input("请输入你要爬取的页数\t")
         key = "夏装 女"
-        pages = '1'
+        pages = '2'
         self.log.write("当前爬取的关键词：")
         self.log.write(key)
         # for i in range(0, int(pages)):

@@ -31,8 +31,8 @@ class JavaScriptMiddleware(object):
             # 设置agents
             dcap["phantomjs.page.settings.userAgent"] = (random.choice(settings.get('USER_AGENT_LIST')))
 
-            # 禁止加载图片
-            # dcap["phantomjs.page.settings.loadImages"] = False
+            # 加载图片
+            dcap["phantomjs.page.settings.loadImages"] = True
 
             driver = webdriver.PhantomJS(executable_path=settings.get('PHANTOMJS_PATH'), desired_capabilities=dcap)
 
@@ -44,7 +44,7 @@ class JavaScriptMiddleware(object):
             driver.get(request.url)
 
             # simulate user behavior
-            padix = 2750 + random.randint(0,500)    #超出页面长度也行？
+            padix = 2050 + random.randint(0,500)    #超出页面长度也行？
             js = 'window.scrollTo(0,' + str(padix) + ')'  # 模拟移动到网页(0,3000)像素点的位置，如果网页过长，要分多次移动，以免中间部分因为太快没有加载成功。
             driver.execute_script(js)  # 可执行js，模仿用户操作。此处为将页面拉至1000。
             time.sleep(5 + random.randint(0,9))
