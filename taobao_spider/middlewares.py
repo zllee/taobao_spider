@@ -44,9 +44,10 @@ class JavaScriptMiddleware(object):
             driver.get(request.url)
 
             # simulate user behavior
-            js = 'window.scrollTo(0,3000)'  # 模拟移动到网页(0,3000)像素点的位置，如果网页过长，要分多次移动，以免中间部分因为太快没有加载成功。
+            padix = 2750 + random.randint(0,500)    #超出页面长度也行？
+            js = 'window.scrollTo(0,' + str(padix) + ')'  # 模拟移动到网页(0,3000)像素点的位置，如果网页过长，要分多次移动，以免中间部分因为太快没有加载成功。
             driver.execute_script(js)  # 可执行js，模仿用户操作。此处为将页面拉至1000。
-            time.sleep(5)
+            time.sleep(5 + random.randint(0,9))
 
             # 测试发现，在图片加载的场景中，wait并不起作用
             # 等待异步请求响应
@@ -113,24 +114,3 @@ class JavaScriptMiddleware(object):
         #     body = body + driver.page_source
 
     # 随机使用预定义列表里的 Proxy代理
-
-
-class ProxyMiddleware(object):
-    def process_request(self, request, spider):
-        # 随机获取from settings import PROXIES里的代理
-        proxy = random.choice(settings.get('PROXIES'))
-
-        # 如果代理可用，则使用代理
-        if proxy['user_pass'] is not None and proxy['user_pass'] != '':
-            # request.meta['proxy'] = "http://%s" % proxy['ip_port']
-            request.meta['proxy'] = "%s://%s" % (proxy['type'], proxy['ip_port'])
-            # 对代理数据进行base64编码
-            encoded_user_pass = base64.encodestring(proxy['user_pass'])
-            # 添加到HTTP代理格式里
-            request.headers['Proxy-Authorization'] = 'Basic ' + encoded_user_pass
-            pass
-        else:
-            print('****代理生效****', proxy['ip_port'])
-            # request.meta['proxy'] = "http://%s" % proxy['ip_port']
-            # request.meta['proxy'] = "%s://%s" % (proxy['type'], proxy['ip_port'])
-            request.meta['proxy'] = "http://113.12.72.24:3128"

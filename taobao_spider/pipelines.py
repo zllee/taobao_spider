@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # import pymongo
 import os
+import random
 
 import scrapy
 from scrapy.conf import settings
@@ -30,7 +31,16 @@ class ImagesPipeline(ImagesPipeline):
     # 发送图片下载请求
     def get_media_requests(self, item, info):
         for i in range(0, len(item['pic_urls'])):
-            yield scrapy.Request("http:" + item['pic_urls'][i])
+            # TODO 这里没有设置UA、headers
+            download_headers = {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Accept-Encoding': 'gzip, deflate, sdch, br',
+                'Accept-Language': 'zh-CN,zh;q=0.8',
+                'Referer': 'https://www.taobao.com/',
+                'user-agent': random.choice(settings.get('USER_AGENT_LIST'))
+            }
+            request = scrapy.Request("http:" + item['pic_urls'][i], headers=download_headers)
+            yield request
         pass
 
     # 重写item_completed方法

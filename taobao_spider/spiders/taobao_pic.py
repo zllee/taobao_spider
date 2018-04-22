@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import time
+
 import scrapy
 import re
 from scrapy.http import Request
@@ -14,17 +16,18 @@ class TaobaoSpider(Spider):
     # allowed_domains = ['taobao.com']
     start_urls = ['http://taobao.com/']
     redis_key = 'TaobaoSpider:start_urls'
+    count = 0
 
     def parse(self, response):
         # key = input("请输入你要爬取的关键词\t")
         # pages = input("请输入你要爬取的页数\t")
-        key = "男装"
-        pages = '4'
+        key = "夏装 女"
+        pages = '1'
         self.log.write("当前爬取的关键词：")
         self.log.write(key)
-        for i in range(0, int(pages)):
-            url = "https://s.taobao.com/search?q=" + str(key) + "&s=" + str(44 * i)
-            yield Request(url=url, callback=self.page)
+        # for i in range(0, int(pages)):
+        url = "https://s.taobao.com/search?q=" + str(key) + "&s=" + str(44 * pages)
+        yield Request(url=url, callback=self.page)
         pass
 
     def page(self, response):
@@ -68,10 +71,18 @@ class TaobaoSpider(Spider):
             if len(item['pic_urls']) == 0:
                 # TODO  触发反爬时sleep 5min. Url: https://login.tmall.com/?
                 print("图片获取失败。Url:", response.url)
+                if response.url.startswith("https://login.tmall.com/"):
+                    time.sleep(30 * 60)
                 pass
+
+            # 控制频率
+            # self.count = self.count + 1;
+            # if self.count % 5 == 0:
+            # time.sleep(2 * 60)
             self.log.write("商品详情：")
             self.log.write(response.url)
             yield item
         else:
             self.log.write("忽略商品：")
             self.log.write(url)
+
