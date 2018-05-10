@@ -3,7 +3,7 @@ import time
 from selenium import webdriver
 driver = webdriver.PhantomJS(executable_path='D:\\work\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
 # driver.implicitly_wait(10) # seconds
-driver.get("https://detail.tmall.com/item.htm?id=564151856373")
+driver.get("https://item.taobao.com/item.htm?id=566191878384")
 # driver.execute_script("window.scrollTo(0,2000)")
 # time.sleep(5)
 # driver.get_screenshot_as_file('test3.png')        #截图对于排查问题很有帮助
